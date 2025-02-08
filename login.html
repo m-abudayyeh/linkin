@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="login.css">
+    <title>Ludiflex | Login & Registration</title>
+</head>
+<body>
+ <div class="wrapper">
+    <!-- <nav class="nav">
+        <div class="nav-logo">
+            <p>LOGO .</p>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="#" class="link active">Home</a></li>
+                <li><a href="#" class="link">Blog</a></li>
+                <li><a href="#" class="link">Services</a></li>
+                <li><a href="#" class="link">About</a></li>
+            </ul>
+        </div>
+     
+        <div class="nav-menu-btn">
+            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        </div>
+    </nav> -->
+<!----------------------------- Form box ----------------------------------->    
+    <div class="form-box">
+        
+        <!------------------- login form -------------------------->
+        <div class="login-container" id="login">
+            <div class="top">
+                <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                <header>Login</header>
+            </div>
+            <div id="auth-form" class="input-box">
+                <input type="text" class="input-field" placeholder="Username or Email" id="userEmail">
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" placeholder="Password"id="userPassword">
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <button type="submit" id="submit">login</button>
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="login-check">
+                    <label for="login-check"> Remember Me</label>
+                </div>
+                <div class="two">
+                    <label><a href="#">Forgot password?</a></label>
+                </div>  
+                
+            
+            </div>
+        </div>  
+     
+        <!------------------- registration form -------------------------->
+        <div class="register-container" id="register">
+            <div class="top">
+                <span>Have an account? <a href="#" onclick="login()">Login</a></span>
+                <header>Sign Up</header>
+            </div>
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Firstname" id="Firstname">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Lastname" id="Lastname">
+                    <i class="bx bx-user"></i>
+                </div>
+            </div>
+            <div class="input-box">
+                <input type="text" class="input-field" placeholder="Email" id="Email">
+                <i class="bx bx-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" placeholder="Password" id="Password">
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+           <button type="submit" id="sub" >register</button>
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="register-check">
+                    <label for="register-check"> Remember Me</label>
+                </div>
+                <div class="two">
+                    <label><a href="#">Terms & conditions</a></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>   
+
+
+
+
+<!-- <script>
+   
+   function myMenuFunction() {
+    var i = document.getElementById("navMenu");
+    if(i.className === "nav-menu") {
+        i.className += " responsive";
+    } else {
+        i.className = "nav-menu";
+    }
+   }
+ 
+</script> -->
+<!-- <script >
+
+
+
+
+
+
+  
+   let x = document.getElementById("login");
+   
+   let y = document.getElementById("register");
+   
+    function login() {
+        x.style.left = "4px";
+        y.style.right = "-520px";
+        x.style.opacity = 1;
+        y.style.opacity = 0;
+    }
+    function register() {
+        x.style.left = "-510px";
+        y.style.right = "5px";
+        x.style.opacity = 0;
+        y.style.opacity = 1;
+    }
+</script>
+
+<script type="module">
+
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQVZ6Br_1Z1ViiOWV8PFfaCCsU4iihQ-U",
+            authDomain: "first-project-b8ded.firebaseapp.com",
+            projectId: "first-project-b8ded",
+            storageBucket: "first-project-b8ded.firebasestorage.app",
+            messagingSenderId: "922486708777",
+            appId: "1:922486708777:web:3d83a785a234a2a4bcda38",
+            measurementId: "G-MN4FCPS8KJ"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+    // DOM elements
+        const userEmail = document.querySelector("#userEmail");
+        const userPassword = document.querySelector("#userPassword");
+        const authForm = document.querySelector("#auth-form");
+        // const secretContent = document.querySelector("#secretContent");
+        const signInBtn = document.querySelector("#submit");
+        // const signOutBtn = document.querySelector("#signOutBtn");
+        const signUpBtn = document.querySelector("#sub");
+        // const errorMessage = document.querySelector("#errorMessage");
+        // const loadingMessage = document.querySelector("#loadingMessage");
+
+          // User sign-up
+        const userSignUp = async () => {
+            clearError();
+            const email = userEmail.value;
+            const password = userPassword.value;
+
+            if (!email || !password) {
+                displayError("Please fill in both email and password.");
+                return;
+            }
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                alert("Your account has been created!");
+            } catch (error) {
+                displayError(error.message);
+            }
+        };
+
+
+
+         // User sign-in
+        const userSignIn = async () => {
+            clearError();
+            const email = userEmail.value;
+            const password = userPassword.value;
+
+            if (!email || !password) {
+                displayError("Please fill in both email and password.");
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                alert("You have signed in successfully!");
+            } catch (error) {
+                displayError(error.message);
+            }
+        };
+
+           // Check authentication state
+        const checkAuthState = async () => {
+            showLoading(true);
+            onAuthStateChanged(auth, (user) => {
+                showLoading(false);
+                if (user) {
+                    authForm.style.display = 'none';
+                    secretContent.style.display = 'block';
+                } else {
+                    authForm.style.display = 'block';
+                    secretContent.style.display = 'none';
+                }
+            });
+        };
+
+          signUpBtn.addEventListener('click', userSignUp);
+        signInBtn.addEventListener('click', userSignIn);
+
+           // Initial auth state check
+        checkAuthState();
+</script> -->
+
+<script>
+    let x = document.getElementById("login");
+    let y = document.getElementById("register");
+
+    function login() {
+        x.style.left = "4px";
+        y.style.right = "-520px";
+        x.style.opacity = 1;
+        y.style.opacity = 0;
+    }
+
+    function register() {
+        x.style.left = "-510px";
+        y.style.right = "5px";
+        x.style.opacity = 0;
+        y.style.opacity = 1;
+
+
+
+ 
+    }
+</script>
+<!-- 
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            onAuthStateChanged,
+            signOut
+         } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDLoidyKaG3kPT0BIet9h6wZ_BwjrljkFg",
+    authDomain: "login-e88bc.firebaseapp.com",
+    projectId: "login-e88bc",
+    storageBucket: "login-e88bc.firebasestorage.app",
+    messagingSenderId: "64137450004",
+    appId: "1:64137450004:web:ecbcd3519587ebd0658d01"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Firebase Authentication
+  const auth = getAuth(app);
+
+  // Select the "register" button
+  const sub = document.getElementById("sub");
+
+  // Add event listener for the "register" button
+  sub.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    // Get input values
+    const Firstname = document.getElementById("Firstname").value;
+    const Lastname = document.getElementById("Lastname").value;
+    const Email = document.getElementById("Email").value;
+    const Password = document.getElementById("Password").value;
+
+    // Validate input fields
+    if (!Firstname || !Lastname || !Email || !Password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Create a new user with email and password
+    createUserWithEmailAndPassword(auth, Email, Password)
+      .then((userCredential) => {
+        // User successfully created
+        const user = userCredential.user;
+        console.log("User created:", user);
+        alert("Account created successfully!");
+        
+    
+        login()
+        
+      })
+      .catch((error) => {
+        // Handle errors
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(`Error [${errorCode}]: ${errorMessage}`);
+        alert(errorMessage);
+      });
+  });
+ -->
+ <script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { 
+        getAuth, 
+        createUserWithEmailAndPassword, 
+        signInWithEmailAndPassword, 
+        onAuthStateChanged, 
+        signOut 
+    } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDLoidyKaG3kPT0BIet9h6wZ_BwjrljkFg",
+        authDomain: "login-e88bc.firebaseapp.com",
+        projectId: "login-e88bc",
+        storageBucket: "login-e88bc.firebaseapp.com",
+        messagingSenderId: "64137450004",
+        appId: "1:64137450004:web:ecbcd3519587ebd0658d01"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Login Functionality
+    document.getElementById("submit").addEventListener("click", async function (e) {
+        e.preventDefault();
+        const firstName = document.getElementById("Firstname").value;
+        const userEmail = document.getElementById("userEmail").value;
+        const userPassword = document.getElementById("userPassword").value;
+     
+        if (!userEmail || !userPassword) {
+            Swal.fire({
+  title: 'Error!',
+  text: 'Please fill in all fields.',
+  icon: 'warning',
+  confirmButtonText: 'OK'
+});
+            return;
+        }
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, userEmail, userPassword,firstName);
+            const user = userCredential.user;
+            alert("You have signed in successfully!");
+            alert(`wellcome ${firstName}`)
+            window.location.href = "index.html"; // Redirect to home
+        } catch (error) {
+            alert(`Login failed: ${error.message}`);
+        }
+    });
+
+    // Registration Functionality
+    document.getElementById("sub").addEventListener("click", async function (e) {
+        e.preventDefault();
+
+        const firstName = document.getElementById("Firstname").value;
+        const lastName = document.getElementById("Lastname").value;
+        const email = document.getElementById("Email").value;
+        const password = document.getElementById("Password").value;
+
+        if (!firstName || !lastName || !email || !password) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password,firstName);
+            alert("Account created successfully!");
+            login()
+            // window.location.href = "index.html"; // Redirect to login or home
+        } catch (error) {
+            alert(`Registration failed: ${error.message}`);
+        }
+    });
+
+    // Show User Profile
+    // onAuthStateChanged(auth, (user) => {
+    //     const profileDiv = document.getElementById("full-name");
+    //     if (user) {
+    //         profileDiv.textContent = `Welcome, ${user.firstName}`;
+    //     } else {
+    //         profileDiv.textContent = "You are not logged in.";
+    //     }
+    // });
+</script>
+
+ const submit = document.getElementById("submit");
+
+//   // Add event listener for the "register" button
+//   submit.addEventListener("click", function (e) {
+//     e.preventDefault();
+
+//     // Get input values
+//     const userEmail = document.getElementById("userEmail").value;
+//     const userPassworde = document.getElementById("userPassword").value;
+ 
+ 
+//    if (!userEmail || !userPassword ) {
+//       alert("Please fill in all fields.");
+//       return;
+//     }
+//    const userSignIn = async() => {
+            
+//             signInWithEmailAndPassword(auth,userEmail ,userPassworde )
+//             .then((userCredential) => {
+//                 const user = userCredential.user;
+//                 alert("You have signed in successfully!");
+//             })
+//             .catch((error) => {
+//                 const errorCode = error.code;
+//                 const errorMessage = error.message;
+//                 console.log(errorCode + errorMessage)
+//             })
+//         }
+//      })
+const auth1 = getAuth(); // تأكد من تهيئة Firebase بشكل صحيح
+
+const submit = document.getElementById("submit");
+
+// Add event listener for the "login" button
+submit.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  // Get input values
+  const userEmail = document.getElementById("userEmail").value;
+  const userPassword = document.getElementById("userPassword").value;
+
+  // Check if fields are empty
+  if (!userEmail || !userPassword) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  // Sign in the user
+  const userSignIn = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth1, userEmail, userPassword);
+      const user = userCredential.user;
+      alert("You have signed in successfully!");
+      window.location.href = "index.html"; 
+      console.log("User signed in:", user);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(`Error: ${errorCode}, ${errorMessage}`);
+      alert(`Login failed: ${errorMessage}`);
+    }
+  };
+
+  userSignIn(); // Call the function to sign in the user
+});
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<!-- <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBQVZ6Br_1Z1ViiOWV8PFfaCCsU4iihQ-U",
+        authDomain: "first-project-b8ded.firebaseapp.com",
+        projectId: "first-project-b8ded",
+        storageBucket: "first-project-b8ded.firebasestorage.app",
+        messagingSenderId: "922486708777",
+        appId: "1:922486708777:web:3d83a785a234a2a4bcda38",
+        measurementId: "G-MN4FCPS8KJ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // DOM elements
+    const userEmail = document.querySelector("#userEmail");
+    const userPassword = document.querySelector("#userPassword");
+    const signInBtn = document.querySelector("#submit");
+    const signUpBtn = document.querySelector("#sub");
+
+    // Error display utility
+    const displayError = (message) => {
+        alert(message); // Replace with a better UI element if needed
+    };
+
+    const clearError = () => {
+        console.clear(); // Placeholder, no specific error container exists
+    };
+
+    // User sign-up
+    const userSignUp = async () => {
+        clearError();
+        const email = userEmail.value;
+        const password = userPassword.value;
+
+        if (!email || !password) {
+            displayError("Please fill in both email and password.");
+            return;
+        }
+
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            alert("Your account has been created successfully!");
+        } catch (error) {
+            displayError(error.message);
+        }
+    };
+
+    // User sign-in
+    const userSignIn = async () => {
+        clearError();
+        const email = userEmail.value;
+        const password = userPassword.value;
+
+        if (!email || !password) {
+            displayError("Please fill in both email and password.");
+            return;
+        }
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            alert("You have signed in successfully!");
+        } catch (error) {
+            displayError(error.message);
+        }
+    };
+
+    // Check authentication state
+    const checkAuthState = async () => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User is signed in:", user.email);
+                // Implement UI changes for signed-in user
+            } else {
+                console.log("User is signed out.");
+                // Implement UI changes for signed-out user
+            }
+        });
+    };
+
+    // Event listeners
+    signUpBtn.addEventListener('click', userSignUp);
+    signInBtn.addEventListener('click', userSignIn);
+
+    // Initial auth state check
+    checkAuthState();
+</script> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>

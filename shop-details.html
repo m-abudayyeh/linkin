@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shop page</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .product-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .product-gallery {
+            grid-column: 1/2;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .main-image:hover {
+            transform: scale(1.02);
+        }
+
+        .thumbnail-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .thumbnail:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .product-info {
+            grid-column: 2/3;
+            padding: 20px;
+        }
+
+        .product-path {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .product-title {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2d3436;
+        }
+
+        .product-rating {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .product-price {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 30px;
+        }
+
+        .size-selector {
+            margin-bottom: 30px;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .size-option {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .size-option:hover {
+            border-color: #ff4757;
+            color: #ff4757;
+        }
+
+        .quantity-selector {
+            margin-bottom: 30px;
+        }
+
+        .quantity-input {
+            width: 100px;
+            height: 40px;
+            padding: 0 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cart {
+            background: #ff4757;
+            color: white;
+        }
+
+        .btn-cart:hover {
+            background: #ff6b81;
+            transform: translateY(-2px);
+        }
+
+        .btn-buy {
+            background: #2d3436;
+            color: white;
+        }
+
+        .btn-buy:hover {
+            background: #636e72;
+            transform: translateY(-2px);
+        }
+
+        .review-section {
+            grid-column: 3/4;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .review-form {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            margin-top: 5px;
+        }
+
+        .star-rating {
+            color: #ffd700;
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .reviews-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .review-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 1024px) {
+            .product-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .review-section {
+                grid-column: 1/3;
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-gallery,
+            .product-info,
+            .review-section {
+                grid-column: 1/2;
+            }
+        }
+    </style>
+</head>
+<body>
+  <!-- Offcanvas Menu Begin -->
+  <div class="offcanvas-menu-overlay"></div>
+  <div class="offcanvas-menu-wrapper">
+      <div class="offcanvas__option">
+          <div class="offcanvas__links">
+              <a href="#">Sign in</a>
+          </div>
+      </div>
+      <div class="offcanvas__nav__option">
+          <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+          <a href="#"><img src="img/icon/heart.png" alt=""></a>
+          <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+          <div class="price">$0.00</div>
+      </div>
+      <div id="mobile-menu-wrap"></div>
+
+  </div>
+  <!-- Offcanvas Menu End -->
+
+  <!-- Header Section Begin -->
+  <header class="header">
+      <div class="header__top">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-6 col-md-7">
+                      <div class="header__top__left">
+                      </div>
+                  </div>
+                  <div class="col-lg-6 col-md-5">
+                      <div class="header__top__right">
+                          <div class="header__top__links">
+                              <a href="#">Sign in</a>
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3 col-md-3">
+                  <div class="header__logo">
+                    <a href="./index.html"><p style=" font-size: 30px; font-weight:bolder;"><span style="color: red;">G</span>ift<span style="color: red;">C</span>raft</p></a>
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                  <nav class="header__menu mobile-menu">
+                      <ul>
+                          <li><a href="./index.html">Home</a></li>
+                          <li class="active"><a href="./shop.html">Shop</a></li>
+                          <li><a href="#">Pages</a>
+                              <ul class="dropdown">
+                                  <li><a href="./about.html">About Us</a></li>
+                                  <li><a href="./shop-details.html">Shop Details</a></li>
+                                  <li><a href="./checkout.html">Check Out</a></li>
+                              </ul>
+                          </li>
+                          <li><a href="./contact.html">Contacts</a></li>
+                      </ul>
+                  </nav>
+              </div>
+              <div class="col-lg-3 col-md-3">
+                  <div class="header__nav__option">
+                      <a href="#"><img src="img/icon/heart.png" alt=""></a>
+                      <a href="#" id="cartBtnQ"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                      <div class="price" id="cartDiv1">0.00 JD</div>
+                  </div>
+              </div>
+          </div>
+          <div class="canvas__open"><i class="fa fa-bars"></i></div>
+      </div>
+  </header>
+  <!-- Header Section End -->
+
+    <div class="product-container">
+        <div class="product-gallery">
+            <img src="style1/images.jpg" alt="Product" class="main-image">
+            <div class="thumbnail-container">
+                <img src="style1/img.webp" alt="Thumbnail" class="thumbnail">
+                <img src="style1/images (1).jpg" alt="Thumbnail" class="thumbnail">
+                <img src="style1/images (2).jpg" alt="Thumbnail" class="thumbnail">
+            </div>
+        </div>
+     
+        <div class="product-info">
+            <div class="product-path">Home > Products > Frames</div>
+            <h1 class="product-title">Elegant Photo Frame</h1>
+            <div class="product-rating">★★★★☆</div>
+            <div class="product-price">40.00 JD</div>
+
+            <div class="size-selector">
+                <h3>Size</h3>
+                <div class="size-options">
+                    <div class="size-option">M</div>
+                    <div class="size-option">L</div>
+                    <div class="size-option">XL</div>
+                    <div class="size-option">XXL</div>
+                </div>
+            </div>
+
+            <div class="quantity-selector">
+                <h3>Quantity</h3>
+                <input type="number" min="1" value="1" class="quantity-input">
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-cart">Add to Cart</button>
+                <button class="btn btn-buy">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="review-section">
+            <h2>Customer Reviews</h2>
+            <form class="review-form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Comment</label>
+                    <textarea class="form-input" rows="3" required></textarea>
+                </div>
+                <div class="star-rating">★★★★★</div>
+                <button class="btn btn-cart">Submit Review</button>
+            </form>
+
+            <div class="reviews-container">
+                <div class="review-card">
+                    <h4>John Doe</h4>
+                    <div class="star-rating">★★★★★</div>
+                    <p>Great product! Exactly what I was looking for.</p>
+                    <small>Posted on: 2025-01-20</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <div class="logo">
+                                <span class="red-letter">G</span>ift <span class="red-letter">C</span>raft
+                            </div>
+                        </div>
+                        <p>Our gifts are crafted with love, placing your happiness at the center of our design.</p>
+                        <a href="#"><img src="img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Our Product</h6>
+                        <ul>
+                            <li><a href="#">Photo Frames</a></li>
+                            <li><a href="#">Book Decoration</a></li>
+                            <li><a href="#">Carving (Engraving)</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">About Us </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>NewLetter</h6>
+                        <div class="footer__newslatter">
+                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+                            <form action="#">
+                                <input type="text" placeholder="Your email">
+                                <button type="submit"><span class="icon_mail_alt"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+
+                        <p>Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script>
+                            All rights reserved | GiftCraft
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+</body>
+</html>

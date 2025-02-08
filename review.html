@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review and Rating</title>
+    <style>
+        .stars {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+          cursor: pointer;
+        }
+        .star {
+          font-size: 36px;
+          color: #e9e4e4;
+          margin: 0 5px;
+        }
+        .star.selected {
+          color: gold;
+        }
+
+        /* تنسيق الجسم بشكل عام */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* تنسيق العنوان الرئيسي */
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* تنسيق النموذج */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+/* تنسيق الحقول داخل النموذج */
+form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* تنسيق زر الإرسال */
+form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* تنسيق النجوم */
+.stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.star {
+    font-size: 36px;
+    color: #e9e4e4;
+    margin: 0 5px;
+}
+
+.star.selected {
+    color: gold;
+}
+
+/* تنسيق عرض التقييمات */
+#reviewsContainer {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 30px;
+}
+
+#reviewsContainer div {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#reviewsContainer p {
+    font-size: 16px;
+    color: #333;
+}
+
+#reviewsContainer hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin-top: 15px;
+}
+
+/* تنسيق العنوان الفرعي */
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+      </style>
+
+
+</head>
+
+<body>
+
+
+
+    <!-- <div class="flex-box">
+        <div class="left">
+            <div class="big-img">
+                <img src="img/images.jpg" alt="Product Image">
+            </div>
+            <div class="images">
+                <div class="small-img">
+                    <img src="img/images.jpg" onclick="showImg(this.src)" alt="Thumbnail">
+                </div>
+                <div class="small-img">
+                    <img src="img/img.webp" onclick="showImg(this.src)" alt="Thumbnail">
+                </div>
+                <div class="small-img">
+                    <img src="img/img1.jpg" onclick="showImg(this.src)" alt="Thumbnail">
+                </div>
+                <div class="small-img">
+                    <img src="img/images.jpg" onclick="showImg(this.src)" alt="Thumbnail">
+                </div>
+                  <div class="small-img">
+                    <img src="img/images (1).jpg" onclick="showImg(this.src)" alt="Thumbnail">
+                </div>
+                  <div class="small-img">
+                    <img src="img/images (2).jpg" onclick="showImg(this.src)" alt="Thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="url">Home > Product > T-Shirt</div>
+            <div class="pname" id="product-name">T-Shirts for Men</div>
+            <div class="ratings">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="price" id="product-price">$40</div>
+            <div class="size">
+                <p>Size :</p>
+                <div class="psize active">M</div>
+                <div class="psize">L</div>
+                <div class="psize">XL</div>
+                <div class="psize">XXL</div>
+            </div>
+            <div class="quantity">
+                <p>Quantity :</p>
+                <input type="number" min="1" max="5" value="1" id="quantity">
+            </div>
+            <div class="btn-box">
+                <button class="cart-btn" id="cart-btn">Add to Cart</button>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let bigImg = document.querySelector('.big-img img');
+        function showImg(pic) {
+            bigImg.src = pic;
+        }
+    </script>
+
+    <script type="module">
+        // Import the functions you need from Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+    apiKey: "AIzaSyDtcR-i8NJyxAADucL7z5J28cf4BNQaggw",
+    authDomain: "fir-3c6c5.firebaseapp.com",
+    databaseURL: "https://fir-3c6c5-default-rtdb.firebaseio.com",
+    projectId: "fir-3c6c5",
+    storageBucket: "fir-3c6c5.firebasestorage.app",
+    messagingSenderId: "279469604138",
+    appId: "1:279469604138:web:15b5f2ef3e91ddf52ab253"
+  };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Add to Cart functionality
+        document.getElementById("cart-btn").addEventListener("click", () => {
+            const productName = document.getElementById("product-name").textContent;
+            const productPrice = document.getElementById("product-price").textContent;
+            const quantity = document.getElementById("quantity").value;
+
+            const cartItem = {
+                name: productName,
+                price: productPrice,
+                quantity: quantity,
+            };
+
+            // Save to Firebase Realtime Database
+            const cartRef = ref(database, 'cart/');
+            push(cartRef, cartItem)
+                .then(() => {
+                    alert("Product added to cart successfully!");
+                })
+                .catch((error) => {
+                    alert("Error adding to cart: " + error.message);
+                });
+        });
+    </script>
+
+
+ -->
+
+
+
+
+    <h1>Review and Rating System</h1>
+
+    <!-- Form to add a comment -->
+    <form id="reviewForm">
+        <label for="userName">Name:</label>
+        <input type="text" id="userName" required><br><br>
+
+        <label for="comment">Comment:</label>
+        <input type="text" id="comment" required><br><br>
+
+        <label>Rating:</label>
+        <div id="ratingStars" class="stars">
+          <span class="star" data-value="5">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="1">★</span>
+        </div><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Container to display reviews -->
+    <h2>All Reviews</h2>
+    <div id="reviewsContainer"></div>
+
+    <script type="module">
+        // Initialize Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import {
+            getFirestore,
+            addDoc,
+            collection,
+            getDocs,
+            deleteDoc,
+            doc,
+            getDoc,
+            updateDoc
+
+        } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyADpIPsj1xK_9L7t8XMFB_CGQN0RBzqDiM",
+            authDomain: "gift-shop-779d5.firebaseapp.com",
+            projectId: "gift-shop-779d5",
+            storageBucket: "gift-shop-779d5.firebasestorage.app",
+            messagingSenderId: "1046929050162",
+            appId: "1:1046929050162:web:48582f43a2a466c7c78a2b"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        console.log(db);
+        let selectedRating = 0;
+
+    // Handle star click for rating
+    const stars = document.querySelectorAll(".star");
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        selectedRating = parseInt(star.getAttribute("data-value"));
+        updateStarColors(selectedRating);
+      });
+    });
+
+    function updateStarColors(rating) {
+      stars.forEach(star => {
+        const starValue = parseInt(star.getAttribute("data-value"));
+        if (starValue <= rating) {
+          star.classList.add("selected");
+        } else {
+          star.classList.remove("selected");
+        }
+      });
+    }
+
+
+        async function addData(e) {
+            e.preventDefault();
+            const userName = document.getElementById('userName').value;
+            const comment = document.getElementById('comment').value;
+            const timeComment = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} at:  ${new Date().getHours()}:${new Date().getMinutes()}`;
+            
+            
+            try {
+                const docRef = await addDoc(collection(db, "ratingProduct"), {
+                    userName:userName,
+                    comment: comment,
+                    rating :selectedRating,
+                    times : timeComment
+                })
+
+
+            alert('Review added!'); 
+            fetchReviews();
+
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+
+        document.getElementById('reviewForm').addEventListener('submit', addData);
+
+        // Fetch and display reviews
+        async function fetchReviews() {
+            const reviewsContainer = document.getElementById('reviewsContainer');
+            reviewsContainer.innerHTML = ''; // Clear previous reviews
+
+            const querySnapshot = await getDocs(collection(db, "ratingProduct"));
+            querySnapshot.forEach(doc => {
+                const review = doc.data();
+                const reviewDiv = document.createElement('div');
+                reviewDiv.innerHTML = `
+          <p><strong>Name:</strong> ${review.userName}</p>
+          <p><strong>Comment:</strong> ${review.comment}</p>
+          <p><strong>Rating:</strong> ${'⭐'.repeat(review.rating)}</p>
+          <p><strong>Date:</strong> ${review.times}</p>
+          <hr>
+        `;
+                reviewsContainer.appendChild(reviewDiv);
+            });
+        }
+
+        
+        fetchReviews();
+    </script>
+</body>
+
+</html>
+
+
+
+
+
